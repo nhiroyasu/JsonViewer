@@ -14,6 +14,7 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' },
+      { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.6.3/css/all.css'}
     ],
     script: [
       { src: 'https://code.jquery.com/jquery-1.12.4.js' },
@@ -33,6 +34,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~plugins/global_components.js'
   ],
   /*
   ** Nuxt.js dev-modules
