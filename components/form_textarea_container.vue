@@ -10,13 +10,19 @@
         v-model="textarea_data"
         @keypress.enter.ctrl="on_text_enter"
       ></textarea>
-      <input id="json-enter" class="my-1 rounded" type="submit" value="ENTER" @click="on_text_enter" />
+      <input
+        id="json-enter"
+        class="my-1 rounded"
+        type="submit"
+        value="ENTER"
+        @click="on_text_enter"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import JsonManager from "~/plugins/json_manager.js";
+import JsonManager from '~/plugins/json_manager.js'
 
 export default {
   data() {
@@ -27,15 +33,13 @@ export default {
   methods: {
     on_text_enter() {
       this.$emit('reset')
-      setTimeout(() => {
-        const data = JsonManager.text_to_json(this.textarea_data)
-        console.log(data);
-        if (data != null) {
-          this.$store.commit('json_data/updateData', data)
-        } else {
-          alert("JSONデータの形式が正しくありません")
-        }
-      }, 500)
+      const data = JsonManager.text_to_json(this.textarea_data)
+      console.log(data)
+      if (data != null) {
+        this.$store.commit('json_data/updateData', data)
+      } else {
+        alert('JSONデータの形式が正しくありません')
+      }
     }
   }
 }

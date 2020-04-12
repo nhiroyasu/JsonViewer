@@ -7,11 +7,14 @@
       </div>
     </div>
     <hr class="mx-5" />
-    <div class="mt-3 px-5" v-if="json_data !== null" style="display:inline-block">
+    <div class="mt-3 px-5" v-if="json_data !== null && is_loaded" style="display:inline-block">
       <array-container v-if="Array.isArray(json_data)" :array="json_data" />
       <object-container v-else :object="json_data" />
     </div>
-    <loading v-else />
+    <loading v-else-if="is_loading" />
+    <div v-else>
+      NO DATA
+    </div>
   </div>
 </template>
 
@@ -31,7 +34,10 @@ export default {
     Loading
   },
   data() {
-    return {}
+    return {
+      is_loading: false,
+      is_loaded: false
+    }
   },
   updated() {
     this.$nextTick(function() {
@@ -42,6 +48,16 @@ export default {
   computed: {
     json_data() {
       return this.$store.state.json_data.data
+    }
+  },
+  watch: {
+    json_data(newValue, oldValue) {
+      if (newValue !== null) {
+        this.is_loading = true
+        setTimeout(() => {
+          this.is_loaded = true
+        }, 500);
+      }
     }
   },
   methods: {
@@ -83,8 +99,12 @@ export default {
   animation-fill-mode: forwards;
 }
 @keyframes frame_out {
-  0%{ transform: scaleX(100%) scaleY(100%);}
-  100%{ transform: scaleX(0%) scaleY(0%);}
+  0% {
+    transform: scaleX(100%) scaleY(100%);
+  }
+  100% {
+    transform: scaleX(0%) scaleY(0%);
+  }
 }
 .visibility-show {
   transform-origin: top left;
@@ -93,7 +113,11 @@ export default {
   animation-fill-mode: forwards;
 }
 @keyframes frame_in {
-  0%{ transform: scaleX(0%) scaleY(0%);}
-  100%{ transform: scaleX(100%) scaleY(100%);}
+  0% {
+    transform: scaleX(0%) scaleY(0%);
+  }
+  100% {
+    transform: scaleX(100%) scaleY(100%);
+  }
 }
 </style>

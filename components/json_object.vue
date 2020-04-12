@@ -56,6 +56,7 @@ export default {
   created() {
     this.keys = Object.keys(this.object)
   },
+  
   methods: {
     switch_display() {
       if (this.is_show) {

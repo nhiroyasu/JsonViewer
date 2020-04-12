@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import JsonManager from "~/plugins/json_manager.js";
+import JsonManager from '~/plugins/json_manager.js'
 
 export default {
   methods: {
@@ -25,15 +25,13 @@ export default {
       let files = event.target.files
       let reader = new FileReader()
       reader.onload = e => {
-        const text = e.target.result;
-        setTimeout(() => {
-          const data = JsonManager.text_to_json(text);
-          if (data != null) {
-            this.$store.commit('json_data/updateData', data);
-          } else {
-            alert("JSONデータの形式が正しくありません");
-          }
-        }, 500)
+        const text = e.target.result
+        const data = JsonManager.text_to_json(text)
+        if (data != null) {
+          this.$store.commit('json_data/updateData', data)
+        } else {
+          alert('JSONデータの形式が正しくありません')
+        }
       }
       reader.readAsText(files[0])
     }
