@@ -1,18 +1,30 @@
 <template>
-  <div v-if="is_show" class="object-container px-3 pt-4 pb-2 d-flex flex-column">
-    <div class="object-badge badge">object</div>
-    <div class="object-hidden-icon mr-2 p-1" @click="on_clicked_icon">
-      <i class="fas fa-times"></i>
+  <div class="d-inline-block" @click.right.prevent.stop="switch_display">
+    <div
+      v-show="is_show"
+      class="object-container"
+      :class="{ 'visibility-hidden': !is_show_for_anim, 'visibility-show': is_show_for_anim }"
+    >
+      <div class="px-3 pt-4 pb-2 d-flex flex-column">
+        <div class="object-badge badge">object</div>
+        <div class="object-hidden-icon mr-2 p-1" @click="switch_display">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="my-1 d-flex flex-row align-items-start" v-for="(k, index) in keys" :key="index">
+          <key-container :key_data="k" />
+          <array-container v-if="Array.isArray(object[k])" class="mx-2" :array="object[k]" />
+          <object-container
+            v-else-if="typeof object[k] === 'object'"
+            class="mx-2"
+            :object="object[k]"
+          />
+          <value-container v-else class="ml-2" :value_data="object[k]" />
+        </div>
+      </div>
     </div>
-    <div class="my-md-1 d-flex flex-row align-items-start" v-for="(k, index) in keys" :key="index">
-      <key-container :key_data="k" />
-      <array-container v-if="Array.isArray(object[k])" class="mx-2" :array="object[k]" />
-      <object-container v-else-if="typeof object[k] === 'object'" class="mx-2" :object="object[k]" />
-      <value-container v-else class="ml-2" :value_data="object[k]" />
+    <div v-show="!is_show" class="zip-object py-1 px-3 rounded" @click="switch_display">
+      <i class="fas fa-ellipsis-h"></i>
     </div>
-  </div>
-  <div v-else class="hidden-object py-1 px-3 rounded" @click="on_clicked_icon">
-    <i class="fas fa-ellipsis-h"></i>
   </div>
 </template>
 
@@ -35,15 +47,45 @@ export default {
   },
   data() {
     return {
-      is_show: true
+      is_show: true,
+      is_show_for_anim: true,
+      keys: [],
+      render_obj: {}
     }
   },
   created() {
     this.keys = Object.keys(this.object)
   },
   methods: {
-    on_clicked_icon() {
-      this.is_show = !this.is_show
+    switch_display() {
+      if (this.is_show) {
+        setTimeout(() => {
+          this.is_show = !this.is_show
+        }, 300)
+      } else {
+        this.is_show = !this.is_show
+      }
+      this.is_show_for_anim = !this.is_show_for_anim
+    },
+    render() {
+      const self = this
+      self.list = []
+      const list = this.keys
+      const ite = (function*() {
+        // NOTE: 100アイテムづつsetTimeoutでレンダリング
+        while (true) {
+          const items = list.splice(0, 100) // Get items 100 by 100
+          if (items.length <= 0) break
+          yield setTimeout(() => {
+            for (let len = items.length, i = 0; i < len; i++) {
+              const item = items[i]
+              self.list.push(item)
+            }
+            ite.next()
+          })
+        }
+      })()
+      ite.next()
     }
   }
 }
@@ -75,6 +117,7 @@ export default {
     right: 0px;
     color: var(--app-theme-yellow);
     font-size: 1.2rem;
+    cursor: pointer;
     transition: all 0.3s ease-out;
 
     &:hover {
@@ -83,9 +126,19 @@ export default {
   }
 }
 
-.hidden-object {
+.zip-object {
   color: var(--app-theme-yellow);
   background-color: rgb(236, 236, 236);
   font-size: 1.2rem;
+  cursor: pointer;
+  animation: fade_in 0.3s ease-out forwards;
+}
+@keyframes fade_in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>

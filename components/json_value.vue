@@ -1,6 +1,10 @@
 <template>
   <div class="value-container px-md-3 px-2 py-1 d-inline-flex">
     <a v-if="is_url(value_data)" :href="value_data" target="_blank">{{ value_data }}</a>
+    <span v-else-if="value_data === true" style="color: orange; font-weight:bold;">{{ value_data }}</span>
+    <span v-else-if="value_data === false" style="color: blue; font-weight:bold;">{{ value_data }}</span>
+    <span v-else-if="(typeof value_data) === 'number'" style="color: darkblue">{{ value_data }}</span>
+    <span v-else-if="value_data === null" style="color: red; font-weight:bold;">{{ "NULL" }}</span>
     <span v-else>{{ value_data }}</span>
   </div>
 </template>

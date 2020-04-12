@@ -1,63 +1,54 @@
 <template>
-  <div class="container my-5 root-container text-center">
-    <div class="form-group form-for-json">
-      <label class="py-1 px-3" for="input-for-json">JSONファイルを選択</label>
-      <input
-        type="file"
-        class="form-control-file"
-        accept=".json"
-        name="json"
-        id="input-for-json"
-        aria-describedby="fileHelpId"
-        style="display:none"
-        @change="on_changed_data($event)"
-      />
-      <small id="fileHelpId" class="form-text text-muted">JSONファイルを選択</small>
+  <div class="my-5 root-container text-center">
+    <div class="container">
+      <div class="row align-items-center">
+        <form-input-container class="col-md-4 col-12" @reset="on_reset" />
+        <form-textarea-container class="col-md-4 col-12" @reset="on_reset" />
+      </div>
     </div>
-    <hr />
-
-    <div v-if="json_data !== null" style="display:inline-block">
-      <array-container v-if="json_is_array" :array="json_data" />
+    <hr class="mx-5" />
+    <div class="mt-3 px-5" v-if="json_data !== null" style="display:inline-block">
+      <array-container v-if="Array.isArray(json_data)" :array="json_data" />
       <object-container v-else :object="json_data" />
     </div>
+    <loading v-else />
   </div>
 </template>
 
 <script>
 // import ArrayContainer from "~/components/json_array.vue";
 // import ObjectContainer from "~/components/json_object.vue";
+import FormInputContainer from '~/components/form_input_container.vue'
+import FormTextareaContainer from '~/components/form_textarea_container.vue'
+import Loading from '~/components/loading.vue'
 
 export default {
   components: {
     // ArrayContainer,
     // ObjectContainer,
+    FormInputContainer,
+    FormTextareaContainer,
+    Loading
   },
   data() {
-    return {
-      json_data: null,
-      json_is_array: false
+    return {}
+  },
+  updated() {
+    this.$nextTick(function() {
+      // ビュー全体が再レンダリングされた後にのみ実行されるコード
+      console.log('update', this.$store.state.json_data.data !== null)
+    })
+  },
+  computed: {
+    json_data() {
+      return this.$store.state.json_data.data
     }
   },
   methods: {
-    on_changed_data(event) {
-      this.json_data = null // reset
-      let files = event.target.files
-      let reader = new FileReader()
-      reader.onload = e => {
-        this.text_to_json(e.target.result)
-      }
-      reader.readAsText(files[0])
-    },
-    text_to_json(text) {
-      this.set_json_data(JSON.parse(text))
-    },
-    set_json_data(json) {
-      console.log(json)
-      this.json_data = json
-      this.json_is_array = Array.isArray(this.json_data)
+    on_reset() {
+      this.$store.commit('json_data/updateData', null)
     }
-  },
-  computed: {}
+  }
 }
 </script>
 
@@ -84,18 +75,25 @@ export default {
   overflow: scroll;
 }
 
-.form-for-json {
-  label {
-    background-color: #0fbcf9;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 1.2rem;
-    color: white;
-    border-radius: 20px;
-    transition: all 0.3s ease-out;
-
-    &:hover {
-      box-shadow: rgba(15, 186, 249, 0.699) 0px 0px 10px;
-    }
-  }
+// animations
+.visibility-hidden {
+  transform-origin: top left;
+  animation-name: frame_out;
+  animation-duration: 300ms;
+  animation-fill-mode: forwards;
+}
+@keyframes frame_out {
+  0%{ transform: scaleX(100%) scaleY(100%);}
+  100%{ transform: scaleX(0%) scaleY(0%);}
+}
+.visibility-show {
+  transform-origin: top left;
+  animation-name: frame_in;
+  animation-duration: 300ms;
+  animation-fill-mode: forwards;
+}
+@keyframes frame_in {
+  0%{ transform: scaleX(0%) scaleY(0%);}
+  100%{ transform: scaleX(100%) scaleY(100%);}
 }
 </style>

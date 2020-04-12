@@ -1,17 +1,29 @@
 <template>
-  <div v-if="is_show" class="array-container px-md-3 pt-4 pb-2 d-flex flex-column">
-    <div class="array-badge badge">array</div>
-    <div class="array-hidden-icon mr-2 p-1" @click="on_clicked_icon">
-      <i class="fas fa-times"></i>
+  <div class="d-inline-block" @click.right.prevent.stop="switch_display">
+    <div
+      v-show="is_show"
+      class="array-container"
+      :class="{ 'visibility-hidden': !is_show_for_anim, 'visibility-show': is_show_for_anim }"
+    >
+      <div class="px-3 pt-4 pb-2 d-flex flex-column align-items-start">
+        <div class="array-badge badge">array</div>
+        <div class="array-hidden-icon mr-2 p-1" @click="switch_display">
+          <i class="fas fa-times"></i>
+        </div>
+        <div v-for="(item, index) in array" :key="index">
+          <array-container v-if="Array.isArray(item)" class="my-1" :array="item" />
+          <object-container
+            v-else-if="(typeof item) === 'object' && item !== null"
+            class="my-1"
+            :object="item"
+          />
+          <value-container v-else class="my-md-1" :value_data="item" />
+        </div>
+      </div>
     </div>
-    <div v-for="(item, index) in array" :key="index">
-      <array-container v-if="Array.isArray(item)" class="my-1" :array="item" />
-      <object-container v-else-if="(typeof item) === 'object'" class="my-1" :object="item" />
-      <value-container v-else class="my-md-1" :value_data="item" />
+    <div v-show="!is_show" class="zip-array py-1 px-3 rounded" @click="switch_display">
+      <i class="fas fa-ellipsis-h"></i>
     </div>
-  </div>
-  <div v-else class="hidden-array py-1 px-3 rounded" @click="on_clicked_icon">
-    <i class="fas fa-ellipsis-h"></i>
   </div>
 </template>
 
@@ -32,13 +44,21 @@ export default {
   },
   data() {
     return {
-      is_show: true
+      is_show: true,
+      is_show_for_anim: true
     }
   },
   created() {},
   methods: {
-    on_clicked_icon() {
-      this.is_show = !this.is_show
+    switch_display() {
+      if (this.is_show) {
+        setTimeout(() => {
+          this.is_show = !this.is_show
+        }, 300)
+      } else {
+        this.is_show = !this.is_show
+      }
+      this.is_show_for_anim = !this.is_show_for_anim
     }
   }
 }
@@ -68,11 +88,27 @@ export default {
     right: 0px;
     color: var(--app-theme-red);
     font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+
+    &:hover {
+      transform: scale(130%);
+    }
   }
 }
-.hidden-array {
+.zip-array {
   color: var(--app-theme-red);
   background-color: rgb(236, 236, 236);
   font-size: 1.2rem;
+  cursor: pointer;
+  animation: fade_in 0.3s ease-out forwards;
+}
+@keyframes fade_in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>
