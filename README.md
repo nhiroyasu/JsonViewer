@@ -1,7 +1,4 @@
 # JsonViewer
-
-> My supreme Nuxt.js project
-
 ## Build Setup
 
 ```bash
@@ -19,4 +16,12 @@ $ npm run start
 $ npm run generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+## About
+This site is the viewer for json files.
+
+You can see a preview of the json file in the following ways.
+* Select a file
+* Enter json format text data
+
+## Preview
+<img src="./DATA/preview.gif" width="500">
