@@ -11,8 +11,7 @@
         @keypress.enter.ctrl="on_text_enter"
       ></textarea>
       <input
-        id="json-enter"
-        class="my-1 rounded"
+        class="my-1 rounded input-enter"
         type="submit"
         value="ENTER"
         @click="on_text_enter"
@@ -49,7 +48,7 @@ export default {
 #json-text {
   border: 2px solid #0fbcf9;
 }
-#json-enter {
+.input-enter {
   font-family: var(--app-font-rounded);
   font-weight: bold;
 }

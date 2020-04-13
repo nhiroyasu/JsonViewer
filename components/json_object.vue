@@ -132,7 +132,8 @@ export default {
   background-color: rgb(236, 236, 236);
   font-size: 1.2rem;
   cursor: pointer;
-  animation: fade_in 0.3s ease-out forwards;
+  animation: fade_in 0.3s ease-out 0s forwards;
+  -webkit-animation: fade_in 0.3s ease-out 0s forwards;
 }
 @keyframes fade_in {
   0% {

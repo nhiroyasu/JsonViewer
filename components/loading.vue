@@ -62,12 +62,8 @@ svg rect{
 
   div {
     padding: 0px 0.1rem;
-    // animation-direction: alternate;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-out;
-    animation-name: lt_anim;
+    animation: lt_anim 1s ease-out 0s infinite forwards;
+    -webkit-animation: lt_anim 1s ease-out 0s infinite forwards;
 
     display: inline-block;
   }

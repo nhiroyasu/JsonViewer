@@ -102,6 +102,7 @@ export default {
   font-size: 1.2rem;
   cursor: pointer;
   animation: fade_in 0.3s ease-out forwards;
+  -webkit-animation: fade_in 0.3s ease-out forwards;
 }
 @keyframes fade_in {
   0% {

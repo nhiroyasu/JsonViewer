@@ -1,17 +1,19 @@
 <template>
-  <div class="form-group form-for-json">
-    <label class="py-1 px-3 rounded" for="input-for-json">JSONファイルを選択</label>
-    <input
-      type="file"
-      class="form-control-file"
-      accept=".json"
-      name="json"
-      id="input-for-json"
-      aria-describedby="fileHelpId"
-      style="display:none"
-      @change="on_changed_data($event)"
-    />
-    <!-- <small id="fileHelpId" class="form-text text-muted">JSONファイルを選択</small> -->
+  <div>
+    <div class="form-group form-for-json m-0">
+      <label class="py-3 px-3 rounded d-block" for="input-for-json">JSONファイルを選択</label>
+      <input
+        type="file"
+        class="form-control-file m-0"
+        accept=".json"
+        name="json"
+        id="input-for-json"
+        aria-describedby="fileHelpId"
+        style="display:none"
+        @change="on_changed_data($event)"
+      />
+      <!-- <small id="fileHelpId" class="form-text text-muted">JSONファイルを選択</small> -->
+    </div>
   </div>
 </template>
 
