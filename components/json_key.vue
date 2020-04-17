@@ -1,5 +1,5 @@
 <template>
-  <div class="key-container px-2 py-1 d-inline-flex">
+  <div class="key-container d-inline-flex">
     <i class="fas fa-key pr-1"></i>
     {{ key_data }}
   </div>
@@ -16,7 +16,9 @@ export default {
 <style lang="scss">
 .key-container {
   position: relative;
-  max-width: 120px;
+  padding: 8px 10px;
+  min-width: 60px;
+  max-width: 150px;
   border: 3px solid var(--app-theme-green);
   background-color: var(--app-theme-green);
   border-radius: 5px;

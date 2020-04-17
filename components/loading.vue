@@ -1,37 +1,35 @@
 <template>
-  <div>
-    <div class="loader loader--style3 my-5" title="2">
-      <!-- <svg
-        version="1.1"
-        id="loader-1"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        x="0px"
-        y="0px"
-        width="40px"
-        height="40px"
-        viewBox="0 0 50 50"
-        style="enable-background:new 0 0 50 50;"
-        xml:space="preserve"
+  <div class="loader loader--style3 my-5" title="2">
+    <svg
+      version="1.1"
+      id="loader-1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      x="0px"
+      y="0px"
+      width="40px"
+      height="40px"
+      viewBox="0 0 50 50"
+      style="enable-background:new 0 0 50 50;"
+      xml:space="preserve"
+    >
+      <path
+        fill="#000"
+        d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z"
       >
-        <path
-          fill="#000"
-          d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z"
-        >
-          <animateTransform
-            attributeType="xml"
-            attributeName="transform"
-            type="rotate"
-            from="0 25 25"
-            to="360 25 25"
-            dur="0.8s"
-            repeatCount="indefinite"
-          />
-        </path>
-      </svg> -->
-      <div class="loader-text my-2">
-        <div class="lt-1">L</div><div class="lt-2">O</div><div class="lt-3">A</div><div class="lt-4">D</div><div class="lt-5">I</div><div class="lt-6">N</div><div class="lt-7">G</div>
-      </div>
+        <animateTransform
+          attributeType="xml"
+          attributeName="transform"
+          type="rotate"
+          from="0 25 25"
+          to="360 25 25"
+          dur="0.8s"
+          repeatCount="indefinite"
+        />
+      </path>
+    </svg>
+    <div class="loader-text my-2">
+      <div class="lt-1">L</div><div class="lt-2">O</div><div class="lt-3">A</div><div class="lt-4">D</div><div class="lt-5">I</div><div class="lt-6">N</div><div class="lt-7">G</div>
     </div>
   </div>
 </template>
@@ -42,11 +40,11 @@ export default {}
 
 <style lang="scss">
 .loader{
+  position: absolute;
+  top: 100px;
   height: auto;
-  width: 20%;
+  width: 100%;
   text-align: center;
-  display: inline-block;
-  vertical-align: center;
   transform: scale(200%);
 }
 
@@ -64,7 +62,6 @@ svg rect{
     padding: 0px 0.1rem;
     animation: lt_anim 1s ease-out 0s infinite forwards;
     -webkit-animation: lt_anim 1s ease-out 0s infinite forwards;
-
     display: inline-block;
   }
 

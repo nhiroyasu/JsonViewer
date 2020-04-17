@@ -10,6 +10,9 @@
         <div class="array-hidden-icon mr-2 p-1" @click="switch_display">
           <i class="fas fa-times"></i>
         </div>
+        <div v-if="array.length === 0">
+          <span>[ ] : not items</span>
+        </div>
         <div v-for="(item, index) in array" :key="index">
           <array-container v-if="Array.isArray(item)" class="my-1" :array="item" />
           <object-container

@@ -1,37 +1,34 @@
 <template>
-  <div class="my-3 root-container text-center">
-    
-    <div class="container">
-      <div class="row justify-content-center align-items-center py-3">
-        <div class="form-group col-6 col-md-4">
-          <label for="input-form-select">入力形式を選択</label>
-          <select class="custom-select" id="input-form-select" v-model="select_value">
-            <option value="FILE">FILE</option>
-            <!-- <option>URL</option> -->
-            <option value="INPUT">INPUT</option>
-          </select>
+  <div class="root-container container m-0">
+    <div class="row" style="width: 100vw; overflow:hidden;">
+      <div
+        class="bg-light main-container main-cotntainer-scroll"
+        :class="{ 'col-12 col-md-3': show_sidebar, 'col-12 col-md-1 p-0': !show_sidebar }"
+      >
+        <div
+          class="switch-forms col-12 p-0 my-3 flex-fill d-none d-md-block"
+          :class="{ 'text-center': !show_sidebar }"
+        >
+          <button class="my-button" @click="show_sidebar=!show_sidebar">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
-        <form-input-container
-          v-if="select_value === 'FILE'"
-          class="col-12 col-md-4"
-          @reset="on_reset"
-        />
-        <!-- <form-url-container v-else-if="select_value === 'URL'" class="col-12 col-md-4" @reset="on_reset" /> -->
-        <form-textarea-container
-          v-else-if="select_value === 'INPUT'"
-          class="col-12 col-md-4"
-          @reset="on_reset"
-        />
+        <form-input-container class="col-12" :show_sidebar="show_sidebar" @reset="on_reset" />
+        <form-url-container class="col-12" :show_sidebar="show_sidebar" @reset="on_reset" />
+        <form-textarea-container class="col-12" :show_sidebar="show_sidebar" @reset="on_reset" />
       </div>
-    </div>
 
-    <hr class="mx-5" />
-    <div class="mt-3 px-5" v-if="json_data !== null && is_loaded" style="display:inline-block">
-      <array-container v-if="Array.isArray(json_data)" :array="json_data" />
-      <object-container v-else :object="json_data" />
+      <div
+        class="p-3 main-container main-cotntainer-scroll"
+        :class="{ 'col-md-11': !show_sidebar, 'col-md-9': show_sidebar }"
+        v-if="json_data !== null && is_loaded"
+      >
+        <array-container v-if="Array.isArray(json_data)" :array="json_data" />
+        <object-container v-else :object="json_data" />
+      </div>
+      <loading v-else-if="is_loading" />
+      <div v-else>NO DATA</div>
     </div>
-    <loading v-else-if="is_loading" />
-    <div v-else>NO DATA</div>
   </div>
 </template>
 
@@ -58,6 +55,7 @@ export default {
     return {
       is_loading: false,
       is_loaded: false,
+      show_sidebar: true,
       select_value: 'ファイル'
     }
   },
@@ -70,8 +68,7 @@ export default {
       console.log('update', this.$store.state.json_data.data !== null)
     })
   },
-  async asyncData({ params }) {
-  },
+  async asyncData({ params }) {},
   computed: {
     json_data() {
       return this.$store.state.json_data.data
@@ -84,6 +81,8 @@ export default {
         setTimeout(() => {
           this.is_loaded = true
         }, 500)
+      } else {
+        this.is_loaded = false
       }
     }
   },
@@ -101,12 +100,31 @@ export default {
 /* font-family: 'Noto Sans JP', sans-serif; */
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400&display=swap');
 
+.body {
+  // overflow: hidden;
+}
+
+$tab: 680px; // タブレット
+$sp: 480px; // スマホ
+
+@mixin tab {
+  @media (max-width: ($tab)) {
+    @content;
+  }
+}
+@mixin sp {
+  @media (max-width: ($sp)) {
+    @content;
+  }
+}
+
 :root {
   --app-theme-red: #ff7f6e;
   --app-theme-blue: #7ac5ff;
   --app-theme-green: #a1ff8a;
   --app-theme-yellow: #ffd849;
   --app-theme-purple: #c977ff;
+  --my-cyan: #0fbcf9;
 
   --app-font-serif: 'Noto Sans JP', sans-serif;
   --app-font-rounded: 'M PLUS Rounded 1c', sans-serif;
@@ -115,7 +133,30 @@ export default {
 .root-container {
   color: #2d3436;
   font-size: 1rem;
+}
+
+.switch-forms {
+  position: relative;
+
+  button {
+    background-color: #0fbcf9;
+    height: 40px;
+    width: 40px;
+    color: white;
+    border: solid 0px white;
+    border-radius: 20px;
+  }
+}
+
+.main-container {
+  height: 100vh;
+  @include tab {
+    height: auto;
+  }
+}
+.main-cotntainer-scroll {
   overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .threshold {
@@ -151,6 +192,14 @@ export default {
   }
   100% {
     transform: scaleX(100%) scaleY(100%);
+  }
+}
+
+.my-button {
+  box-shadow: 0px 1px 3px grey;
+  transition-duration: 0.3s;
+  &:hover {
+    box-shadow: 0px 3px 5px grey;
   }
 }
 </style>

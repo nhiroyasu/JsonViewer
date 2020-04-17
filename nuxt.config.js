@@ -19,7 +19,10 @@ export default {
     script: [
       { src: 'https://code.jquery.com/jquery-1.12.4.js' },
       { src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' }
-    ]
+    ],
+    bodyAttrs: {
+      class: 'body'
+    }
   },
   /*
   ** Customize the progress-bar color

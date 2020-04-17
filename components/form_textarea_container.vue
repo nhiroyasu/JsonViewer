@@ -1,22 +1,23 @@
 <template>
-  <div>
-    <div class="form-group">
-      <label for="json-text">JSONファイルを入力</label>
-      <textarea
-        class="p-2 rounded"
-        name="text"
-        id="json-text"
-        rows="3"
-        v-model="textarea_data"
-        @keypress.enter.ctrl="on_text_enter"
-      ></textarea>
-      <input
-        class="my-1 rounded input-enter"
-        type="submit"
-        value="ENTER"
-        @click="on_text_enter"
-      />
-    </div>
+  <div v-if="show_sidebar" class="form-group p-0">
+    <label for="json-text">JSONファイルを入力</label>
+    <textarea
+      class="p-2 rounded"
+      name="text"
+      id="json-text"
+      rows="3"
+      v-model="textarea_data"
+      @keypress.enter.ctrl="on_text_enter"
+    ></textarea>
+    <input
+      class="my-1 rounded input-enter my-button"
+      type="submit"
+      value="ENTER"
+      @click="on_text_enter"
+    />
+  </div>
+  <div v-else class="form-icon">
+    <button><i class="far fa-keyboard"></i></button>
   </div>
 </template>
 
@@ -28,6 +29,9 @@ export default {
     return {
       textarea_data: ''
     }
+  },
+  props: {
+    show_sidebar: Boolean,
   },
   methods: {
     on_text_enter() {

@@ -14,7 +14,7 @@
           <key-container :key_data="k" />
           <array-container v-if="Array.isArray(object[k])" class="mx-2" :array="object[k]" />
           <object-container
-            v-else-if="typeof object[k] === 'object'"
+            v-else-if="typeof object[k] === 'object' && object[k] !== null"
             class="mx-2"
             :object="object[k]"
           />
