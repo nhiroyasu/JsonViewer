@@ -1,5 +1,6 @@
 <template>
   <div class="my-3 root-container text-center">
+    
     <div class="container">
       <div class="row justify-content-center align-items-center py-3">
         <div class="form-group col-6 col-md-4">
@@ -23,6 +24,7 @@
         />
       </div>
     </div>
+
     <hr class="mx-5" />
     <div class="mt-3 px-5" v-if="json_data !== null && is_loaded" style="display:inline-block">
       <array-container v-if="Array.isArray(json_data)" :array="json_data" />
@@ -40,6 +42,8 @@ import FormInputContainer from '~/components/form_input_container.vue'
 import FormTextareaContainer from '~/components/form_textarea_container.vue'
 import FormUrlContainer from '~/components/form_url_container.vue'
 import Loading from '~/components/loading.vue'
+
+import axios from 'axios'
 
 export default {
   components: {
@@ -65,6 +69,8 @@ export default {
       // ビュー全体が再レンダリングされた後にのみ実行されるコード
       console.log('update', this.$store.state.json_data.data !== null)
     })
+  },
+  async asyncData({ params }) {
   },
   computed: {
     json_data() {
