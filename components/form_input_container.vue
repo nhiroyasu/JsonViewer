@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show_sidebar" class="form-group form-for-json col-12 p-0 text-center">
+  <div v-if="show_sidebar" class="form-group form-for-json p-0 text-center">
     <label class="py-2 px-2 my-2 rounded my-button" for="input-for-json">JSONファイルを選択</label>
     <input
       type="file"
@@ -14,7 +14,7 @@
     <!-- <small id="fileHelpId" class="form-text text-muted">JSONファイルを選択</small> -->
   </div>
   <div v-else class="form-icon">
-    <button class=""><i class="far fa-file-alt"></i></button>
+    <button class="" @click="$emit('click-icon')"><i class="far fa-file-alt"></i></button>
   </div>
 </template>
 

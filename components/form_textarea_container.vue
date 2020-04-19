@@ -17,7 +17,7 @@
     />
   </div>
   <div v-else class="form-icon">
-    <button><i class="far fa-keyboard"></i></button>
+    <button @click="$emit('click-icon')"><i class="far fa-keyboard"></i></button>
   </div>
 </template>
 

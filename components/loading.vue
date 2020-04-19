@@ -1,5 +1,5 @@
 <template>
-  <div class="loader loader--style3 my-5" title="2">
+  <div class="loader p-3">
     <svg
       version="1.1"
       id="loader-1"
@@ -29,7 +29,13 @@
       </path>
     </svg>
     <div class="loader-text my-2">
-      <div class="lt-1">L</div><div class="lt-2">O</div><div class="lt-3">A</div><div class="lt-4">D</div><div class="lt-5">I</div><div class="lt-6">N</div><div class="lt-7">G</div>
+      <div class="lt-1">L</div>
+      <div class="lt-2">O</div>
+      <div class="lt-3">A</div>
+      <div class="lt-4">D</div>
+      <div class="lt-5">I</div>
+      <div class="lt-6">N</div>
+      <div class="lt-7">G</div>
     </div>
   </div>
 </template>
@@ -39,17 +45,32 @@ export default {}
 </script>
 
 <style lang="scss">
-.loader{
-  position: absolute;
-  top: 100px;
+$tab: 680px; // タブレット
+$sp: 480px; // スマホ
+
+@mixin tab {
+  @media (max-width: ($tab)) {
+    @content;
+  }
+}
+@mixin sp {
+  @media (max-width: ($sp)) {
+    @content;
+  }
+}
+
+.loader {
   height: auto;
-  width: 100%;
   text-align: center;
-  transform: scale(200%);
+  transform-origin: top center;
+  transform: scale(150%);
+  @include tab {
+    transform: scale(100%);
+  }
 }
 
 svg path,
-svg rect{
+svg rect {
   fill: var(--app-theme-purple);
 }
 
@@ -65,19 +86,41 @@ svg rect{
     display: inline-block;
   }
 
-  .lt-1 { animation-delay: 0s; }
-  .lt-2 { animation-delay: 0.1s; }
-  .lt-3 { animation-delay: 0.2s; }
-  .lt-4 { animation-delay: 0.3s; }
-  .lt-5 { animation-delay: 0.4s; }
-  .lt-6 { animation-delay: 0.5s; }
-  .lt-7 { animation-delay: 0.6s; }
+  .lt-1 {
+    animation-delay: 0s;
+  }
+  .lt-2 {
+    animation-delay: 0.1s;
+  }
+  .lt-3 {
+    animation-delay: 0.2s;
+  }
+  .lt-4 {
+    animation-delay: 0.3s;
+  }
+  .lt-5 {
+    animation-delay: 0.4s;
+  }
+  .lt-6 {
+    animation-delay: 0.5s;
+  }
+  .lt-7 {
+    animation-delay: 0.6s;
+  }
 
   @keyframes lt_anim {
-    0% { transform: translateY(0%); }
-    15% { transform: translateY(-30%);}
-    30% { transform: translateY(0%);}
-    100% {transform: translateY(0%);}
+    0% {
+      transform: translateY(0%);
+    }
+    15% {
+      transform: translateY(-30%);
+    }
+    30% {
+      transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(0%);
+    }
   }
 }
 </style>

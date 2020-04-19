@@ -20,7 +20,7 @@
     />
   </div>
   <div v-else class="form-icon">
-    <button>
+    <button @click="$emit('click-icon')">
       <i class="fas fa-link"></i>
     </button>
   </div>
@@ -43,11 +43,11 @@ export default {
     async on_submit() {
       this.$emit('reset')
       const res = await request.request_data(this.url)
-      const data = res.data
-      if (data != null) {
+      if (res !== null) {
+        const data = res.data 
         this.$store.commit('json_data/updateData', data)
       } else {
-        alert('JSONデータの形式が正しくありません')
+        alert('ネットワークエラー')
       }
     }
   }

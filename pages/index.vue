@@ -2,32 +2,62 @@
   <div class="root-container container m-0">
     <div class="row" style="width: 100vw; overflow:hidden;">
       <div
-        class="bg-light main-container main-cotntainer-scroll"
-        :class="{ 'col-12 col-md-3': show_sidebar, 'col-12 col-md-1 p-0': !show_sidebar }"
+        class="col-12 bg-light main-container main-cotntainer-scroll"
+        :class="{ 'col-md-3 col-xl-2 py-3': show_sidebar, 'col-md-1 p-0': !show_sidebar }"
       >
         <div
           class="switch-forms col-12 p-0 my-3 flex-fill d-none d-md-block"
-          :class="{ 'text-center': !show_sidebar }"
+          :class="{ 'd-none': !show_sidebar}"
         >
-          <button class="my-button" @click="show_sidebar=!show_sidebar">
+          <button class="my-button" @click="on_switch_sidebar">
             <i class="fas fa-times"></i>
+            <!-- <i v-else class="fas fa-chevron-right"></i> -->
           </button>
         </div>
-        <form-input-container class="col-12" :show_sidebar="show_sidebar" @reset="on_reset" />
-        <form-url-container class="col-12" :show_sidebar="show_sidebar" @reset="on_reset" />
-        <form-textarea-container class="col-12" :show_sidebar="show_sidebar" @reset="on_reset" />
+        <form-input-container
+          class="col-md-12"
+          :show_sidebar="show_sidebar"
+          @reset="on_reset"
+          @click-icon="on_switch_sidebar"
+        />
+        <form-url-container
+          class="col-md-12"
+          :show_sidebar="show_sidebar"
+          @reset="on_reset"
+          @click-icon="on_switch_sidebar"
+        />
+        <form-textarea-container
+          class="col-md-12 d-none d-md-block"
+          :show_sidebar="show_sidebar"
+          @reset="on_reset"
+          @click-icon="on_switch_sidebar"
+        />
       </div>
 
       <div
         class="p-3 main-container main-cotntainer-scroll"
-        :class="{ 'col-md-11': !show_sidebar, 'col-md-9': show_sidebar }"
+        :class="{ 'col-md-11': !show_sidebar, 'col-md-9 col-xl-10': show_sidebar }"
         v-if="json_data !== null && is_loaded"
       >
         <array-container v-if="Array.isArray(json_data)" :array="json_data" />
         <object-container v-else :object="json_data" />
       </div>
-      <loading v-else-if="is_loading" />
-      <div v-else>NO DATA</div>
+      <div
+        class="d-flex align-items-center justify-content-center"
+        :class="{ 'col-md-11': !show_sidebar, 'col-md-9': show_sidebar }"
+        v-else-if="is_loading"
+      >
+        <loading class="" />
+      </div>
+      <div
+        class="d-flex align-items-center justify-content-center"
+        :class="{ 'col-md-11': !show_sidebar, 'col-md-9': show_sidebar }"
+        v-else
+      >
+        <div class="col-12 text-center">
+          <img class src="/icon.png" alt="#" width="300" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -89,6 +119,9 @@ export default {
   methods: {
     on_reset() {
       this.$store.commit('json_data/updateData', null)
+    },
+    on_switch_sidebar() {
+      this.show_sidebar = !this.show_sidebar
     }
   }
 }
@@ -100,12 +133,8 @@ export default {
 /* font-family: 'Noto Sans JP', sans-serif; */
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400&display=swap');
 
-.body {
-  // overflow: hidden;
-}
-
-$tab: 680px; // タブレット
-$sp: 480px; // スマホ
+$tab: 768px; // タブレット
+$sp: 544px; // スマホ
 
 @mixin tab {
   @media (max-width: ($tab)) {
