@@ -6,8 +6,8 @@
         :class="{ 'col-md-3 col-xl-2 py-3': show_sidebar, 'col-md-1 p-0': !show_sidebar }"
       >
         <div
-          class="switch-forms col-12 p-0 my-3 flex-fill d-none d-md-block"
-          :class="{ 'd-none': !show_sidebar}"
+          class="switch-forms col-12 p-0 my-3 flex-fill d-none"
+          :class="{'d-none': !show_sidebar, 'd-md-block': show_sidebar}"
         >
           <button class="my-button" @click="on_switch_sidebar">
             <i class="fas fa-times"></i>
@@ -32,6 +32,19 @@
           @reset="on_reset"
           @click-icon="on_switch_sidebar"
         />
+        <div class="d-none" :class="{'d-none': !show_sidebar, 'd-md-block': show_sidebar}">
+          <hr>
+          <div>
+            <p style="font-size: 0.8rem;">
+              <i class="fas fa-mouse-pointer"><span class="pl-1">右クリック</span></i><br>
+              及び<br>
+              <i class="fas fa-times"><span class="pl-1">ボタン</span></i><br>
+              を押すことでオブジェクトの縮小ができます。
+            </p>
+          </div>
+          <hr>
+          <p><a href="https://github.com/namid11/JsonViewer" target="_blank"><i class="fab fa-github"> GitHub</i></a></p>
+        </div>
       </div>
 
       <div
