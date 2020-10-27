@@ -32,7 +32,7 @@ import request from '~/plugins/request_data.js'
 export default {
   data() {
     return {
-      url: 'https://qiita.com/api/v2/items?page=1&per_page=20'
+      url: 'https://qiita.com/api/v2/items?page=1&per_page=5'
     }
   },
   props: {
